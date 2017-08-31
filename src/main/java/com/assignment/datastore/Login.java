@@ -11,6 +11,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 /**
  * 
@@ -20,25 +21,17 @@ import com.google.appengine.api.datastore.Query;
 @SuppressWarnings("serial")
 public class Login extends HttpServlet {
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		Query q = new Query("User");
+		Query q = new Query("User").addFilter("email", FilterOperator.EQUAL, username).addFilter("password",
+				FilterOperator.EQUAL, password);
 		PreparedQuery pq = datastore.prepare(q);
-		Iterable<Entity> entityList = pq.asIterable();
-		boolean flag = false;
-		for (Entity entity : entityList) {
-			String dbusername = entity.getProperty("email").toString();
-			String dbpassword = entity.getProperty("password").toString();
-			if (username != null && username.equalsIgnoreCase(dbusername) && password != null
-					&& password.equalsIgnoreCase(dbpassword)) {
-				flag = true;
-				break;
-			}
-		}
-		if (flag) {
+		Entity singleEntity = pq.asSingleEntity();
+		if (singleEntity != null) {
 			res.setContentType("text/html");
 			res.getWriter().println("Login Successfull! <br/>");
 		} else {
@@ -46,5 +39,4 @@ public class Login extends HttpServlet {
 			res.getWriter().println("Login Unsuccessfull! <br/>");
 		}
 	}
-
 }

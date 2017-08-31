@@ -1,3 +1,4 @@
 com\assignment\datastore\Serve.class
+com\assignment\datastore\Migrate.class
 com\assignment\datastore\Login.class
 com\assignment\datastore\Upload.class

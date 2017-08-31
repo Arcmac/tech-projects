@@ -41,13 +41,13 @@ public class Serve extends HttpServlet {
 					user.setProperty("name", row1.getCell(0).getStringCellValue());
 				}
 				if (row1.getCell(1) != null) {
-					user.setProperty("dob", row1.getCell(1).getStringCellValue());
+					user.setProperty("dob", row1.getCell(1).getDateCellValue());
 				}
 				if (row1.getCell(3) != null) {
 					user.setProperty("password", row1.getCell(3).getStringCellValue());
 				}
 				if (row1.getCell(4) != null) {
-					user.setProperty("phone", row1.getCell(4).getStringCellValue());
+					user.setProperty("phone", row1.getCell(4).getNumericCellValue());
 				}
 				if (row1.getCell(5) != null) {
 					user.setProperty("gender", row1.getCell(5).getStringCellValue());
@@ -58,6 +58,7 @@ public class Serve extends HttpServlet {
 				datastore.put(user);
 			}
 		}
+		workbook.close();
 		res.sendRedirect("/login.jsp");
 	}
 }
