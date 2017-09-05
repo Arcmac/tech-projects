@@ -1,4 +1,3 @@
-com\assignment\datastore\Serve.class
-com\assignment\datastore\Migrate.class
-com\assignment\datastore\Login.class
-com\assignment\datastore\Upload.class
+com\assignment\datastore\dao\DatastoreDao.class
+com\assignment\datastore\service\DatastoreService.class
+com\assignment\datastore\controller\MigrateController.class
